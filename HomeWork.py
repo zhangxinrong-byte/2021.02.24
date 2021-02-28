@@ -1,19 +1,8 @@
-'''import pymysql
-
-conn = pymysql.connect(user='root',password='zhangxinrong0122',host='127.0.0.1',database='users',port='3306')
-cursor = conn.cursor()
-
-
-
-cursor.close()
-conn.close()
-'''
-
 from flask import Flask, render_template, request, redirect
 from selenium import webdriver
 import selenium.webdriver.support.ui as ui
 import pymysql
-import time
+
 
 app = Flask(__name__, template_folder='../templates')
 
@@ -32,14 +21,14 @@ def register2():
     rusername = request.form.get('rusername')
     rpw = request.form.get('rpassword')
     if username is not None:
-        with open('D:/pythonProject/flaskProject/templates/users_info.txt', 'r+', encoding='utf-8') as f:
+        with open('/templates/users_info.txt', 'r+', encoding='utf-8') as f:
             if '姓名：{} 密码：{}\n'.format(username, pw) in f.readlines():
                 return redirect('/register3')
             else:
                 return '用户名或密码错误 \n <a href="/register">重新登陆</a>'
 
     elif rusername is not None:
-        with open('D:/pythonProject/flaskProject/templates/users_info.txt', 'a+', encoding='utf-8') as f1:
+        with open('/templates/users_info.txt', 'a+', encoding='utf-8') as f1:
             f1.write('姓名：{} 密码：{}'.format(rusername, rpw))
             f1.write('\n')
         return r
@@ -77,8 +66,6 @@ def downLoad():
         driver = webdriver.Chrome(executable_path='D:\chromedriver_win32\chromedriver.exe', options=options)
 
         driver.get(url)
-        # wait = ui.WebDriverWait(driver, 10)
-        # wait.until(lambda browser: browser.find_element_by_link_text('https://passport.csdn.net/account/login'))
 
         driver.find_element_by_xpath("//div[@class='toolbar-btn toolbar-btn-login csdn-toolbar-fl ']/a").click()
         login = driver.find_elements_by_xpath('/html//li[@class="text-tab border-right"]/a')
